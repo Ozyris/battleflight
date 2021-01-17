@@ -4,7 +4,14 @@ Battleflight system provides an opportunity to arrange competitions for pilots o
 
 # Structure
 
+1. Aircraft with gps and telemetry receiver
+2. TX with WiFi adapter
+3. Field towers with LoRa and unique functions
+4. WiFi/LoRa server to communicate with players and towers
 
+[explanation.jpg]
 
 # Hardware and connection
+
+[connection.jpg]
 
