@@ -18,6 +18,7 @@ Battleflight system provides an opportunity to arrange competitions for pilots o
 # Resources
 
 t.me/battleflight
+
 https://dronefix.ru/tag/battleflight
 
 # Thanks
