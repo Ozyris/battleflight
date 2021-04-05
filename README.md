@@ -15,3 +15,13 @@ Battleflight system provides an opportunity to arrange competitions for pilots o
 
 [connection.jpg]
 
+# Resources
+
+t.me/battleflight
+https://dronefix.ru/tag/battleflight
+
+# Thanks
+
+* pawelsky – FrSky S-Port telemetry library
+
+Your help would be greatly appreciated.
