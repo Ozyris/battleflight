@@ -12,13 +12,13 @@
 #endif
 
 //uint8_t Plr, Col, Typ, Wp;
-uint8_t Plr = 0x01;       //Player1
-uint8_t Col = 0xB1;       //Colour - Red
-uint8_t Typ = 0xD1;       //Type - Quad
-uint8_t Wp  = 0xE1;       //Weapon - No
+uint8_t Plr = 1;       //Player1
+uint8_t Col = 2;       //Colour - Blue
+uint8_t Typ = 1;       //Type - Quad
+uint8_t Wp  = 1;       //Weapon - No
 float int_arr[2];         //Lat+Lon
 
-const char * udpAddress = "192.168.4.1";
+const char * udpAddress = "192.168.4.255";
 const int udpPort = 4210;
 WiFiUDP Udp;
 
@@ -30,6 +30,9 @@ uint16_t decodeResult;
 
 void setup()
 {
+  pinMode(D4, OUTPUT);
+  pinMode(D3, INPUT_PULLUP);
+  
   // Configure the decoder serial port and sensors (remember to use & to specify a pointer to sensor)
   decoder.begin(FrSkySportSingleWireSerial::SOFT_SERIAL_PIN_D2, &gps);
 
@@ -44,6 +47,19 @@ void setup()
   Udp.begin(udpPort);
 }
 
+void teamSelect(){
+
+  if (digitalRead (D3) == LOW){                   //Select team button pressed
+    if (Col == 1){ 
+      Col =2;                                     //Change Team
+      digitalWrite(D4, LOW);                      //Indicate Team
+    } else if (Col == 2){
+      Col =1; 
+      digitalWrite(D4, HIGH);            
+    }
+  }
+}
+
 void loop()
 {
   decodeResult = decoder.decode();
@@ -54,6 +70,8 @@ void loop()
   {
     displayTime = currentTime + 1000;
 
+    teamSelect();
+
     Serial.println("");
 
     int_arr[0] = gps.getLat();
@@ -61,7 +79,7 @@ void loop()
 
     uint8_t i,j;  
     uint8_t to_send_arr[8]; // 2 x (32/8)
-    float *p;
+//    float *p;
     uint8_t *p2;
 
     p2=(uint8_t *)int_arr;
@@ -80,5 +98,6 @@ void loop()
     Udp.write(Plr);    Udp.write(Col);    Udp.write(Typ);    Udp.write(Wp);
     Udp.endPacket();
     Serial.println("");
+    Serial.print(Plr); Serial.print("\t");    Serial.print(Col); Serial.print("\t");     Serial.print(Typ); Serial.print("\t");     Serial.print(Wp);
   }
 }
